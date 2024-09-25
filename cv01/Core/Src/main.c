@@ -96,15 +96,28 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-
+  uint8_t array[] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0};
 
   while (1)
   {
 
-	  LL_GPIO_SetOutputPin( LD2_GPIO_Port, LD2_Pin);
+	  for (uint8_t i = 0 ; i<sizeof(array); i++){
+		if(array[i] ==1){
+			LL_GPIO_SetOutputPin( LD2_GPIO_Port, LD2_Pin);
+
+		}
+		else{
+			LL_GPIO_ResetOutputPin( LD2_GPIO_Port, LD2_Pin);
+
+	  	  }
+		LL_mDelay(200);
+  	  }
+	  /*  LL_GPIO_SetOutputPin( LD2_GPIO_Port, LD2_Pin);
 	  LL_mDelay(200);
 	  LL_GPIO_ResetOutputPin( LD2_GPIO_Port, LD2_Pin);
 	  LL_mDelay(200);
+	  */
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
