@@ -1,0 +1,4 @@
+C:\Temp\MKS\JAJ_hello_world\drivers/fsl_clock.h:983:20:CLOCK_EnableClock	24	static
+C:\Temp\MKS\JAJ_hello_world\drivers/fsl_iocon.h:182:22:IOCON_PinMuxSet	24	static
+../board/pin_mux.c:29:6:BOARD_InitBootPins	8	static
+../board/pin_mux.c:58:6:BOARD_InitPins	24	static
