@@ -34,13 +34,6 @@
 /* USER CODE BEGIN PD */
 #define ADC_Q  6
 
-/* Temperature sensor calibration value address */
-#define TEMP110_CAL_ADDR ((uint16_t*) ((uint32_t) 0x1FFFF7C2))
-#define TEMP30_CAL_ADDR ((uint16_t*) ((uint32_t) 0x1FFFF7B8))
-
-/* Internal voltage reference calibration value address */
-#define VREFINT_CAL_ADDR ((uint16_t*) ((uint32_t) 0x1FFFF7BA))
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -55,8 +48,6 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 static volatile uint32_t raw_pot;
-static volatile uint32_t raw_temp;
-static volatile uint32_t raw_volt;
 
 /* USER CODE END PV */
 
@@ -126,7 +117,7 @@ int main(void)
 
 	  uint16_t speed;
 
-	  for(uint8_t a=0; a <10; a++){
+	  for(uint8_t a=0; a <9; a++){
 		  speed = (raw_pot * 481) / 4096 +20;
 		  sct_value(speed,a);
 		  HAL_Delay(speed);
@@ -320,23 +311,15 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
-	static uint8_t channel;
+	//static uint8_t channel;
 	static uint32_t avg_pot;
 
-	if (channel == 0){
+
 		raw_pot = avg_pot >> ADC_Q;
 		avg_pot -= raw_pot;
 		avg_pot += HAL_ADC_GetValue(hadc);
-	}
-	else if (channel == 1){
-		raw_temp = HAL_ADC_GetValue(hadc);
-	}
-	else {
-		raw_volt = HAL_ADC_GetValue(hadc);
-	};
 
-	if (__HAL_ADC_GET_FLAG(hadc, ADC_FLAG_EOS)) channel = 0;
-	else channel++;
+	//if (__HAL_ADC_GET_FLAG(hadc, ADC_FLAG_EOS)) channel = 0;
 
 
 
